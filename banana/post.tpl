@@ -80,12 +80,12 @@
 			</a>
 			{if $LS->ACL_IsAllowEditForumPost($oPost,$oUserCurrent)}
 				<a href="{router page='forum'}topic/edit/{$oPost->getId()}" class="button button-orange">
-					<span class="icon-white icon-edit"></span> {$aLang.plugin.forum.button_edit}
+					<span class="icon-edit"></span> {$aLang.plugin.forum.button_edit}
 				</a>
 			{/if}
 			{if $LS->ACL_IsAllowDeleteForumPost($oPost,$oUserCurrent)}
 				<a href="{router page='forum'}topic/delete/{$oPost->getId()}" class="button button-red">
-					<span class="icon-white icon-remove"></span> {$aLang.plugin.forum.button_delete}
+					<span class="icon-remove"></span> {$aLang.plugin.forum.button_delete}
 				</a>
 			{/if}
 		</section>

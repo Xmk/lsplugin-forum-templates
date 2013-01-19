@@ -33,7 +33,7 @@
 
 		<p>
 			<label for="post_text">{$aLang.plugin.forum.post_create_text}{if !$oConfig->GetValue('view.tinymce')} ({$aLang.plugin.forum.post_create_text_notice}){/if}:</label>
-			<textarea name="post_text" id="post_text" rows="10" class="input-text input-width-full">{$_aRequest.post_text}</textarea>
+			<textarea name="post_text" id="post_text" rows="10" class="input-text input-width-full mce-editor">{$_aRequest.post_text}</textarea>
 		</p>
 
 		{hook run='form_forum_fast_reply_end'}

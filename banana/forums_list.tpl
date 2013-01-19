@@ -24,10 +24,11 @@
 					</p>
 					{/if}
 					{if $aModerators}
-					<p class="details">
+					<p class="details userlist">
 						<strong>{$aModerators|@count|declension:$aLang.plugin.forum.moderators_declension:'russian'}:</strong>
 						{foreach from=$aModerators item=oModerator name=moderators}
-						<em>{$oModerator->getLogin()}</em>{if !$smarty.foreach.moderators.last}, {/if}
+							{assign var='oUserModer' value=$oModerator->getUser()}
+							<a href="{$oUserModer->getUserWebPath()}"><img src="{$oUserModer->getProfileAvatarPath(24)}" title="{$oUserModer->getLogin()}" /></a>
 						{/foreach}
 					</p>
 					{/if}
@@ -45,28 +46,36 @@
 					{if $oPost}
 						{assign var="oTopic" value=$oPost->getTopic()}
 						{assign var="oPoster" value=$oPost->getUser()}
-						<ul class="last-post">
-							{if $oForum->getAllowRead() && $oForum->getAutorization()}
-							<li><a href="{$oTopic->getUrlFull()}">{$oTopic->getTitle()}</a></li>
+						<div class="author">
+							{if $oPoster}
+								<a href="{$oPoster->getUserWebPath()}"><img src="{$oPoster->getProfileAvatarPath(48)}" title="{$aLang.plugin.forum.post_writer}: {$oPoster->getLogin()}" /></a>
 							{else}
-							<li><em>{$aLang.plugin.forum.forum_closed}</em></li>
+								<a href="{router page='forum'}topic/{$oTopic->getId()}/lastpost"><img src="{cfg name='path.static.skin'}/images/avatar_male_48x48.png" title="{$aLang.plugin.forum.post_writer}: {$aLang.plugin.forum.guest_prefix}{$oPost->getGuestName()}" /></a>
 							{/if}
+						</div>
+						<ul class="last-post">
+							<li>
+								{if $oForum->getAllowRead() && $oForum->getAutorization()}
+									<a href="{$oTopic->getUrlFull()}">{$oTopic->getTitle()}</a>
+								{else}
+									<em>{$aLang.plugin.forum.forum_closed}</em>
+								{/if}
+							</li>
 							<li>
 								{$aLang.plugin.forum.post_writer}:
-								<span class="author">
-									{if $oPoster}
-										<a href="{$oPoster->getUserWebPath()}"><img src="{$oPoster->getProfileAvatarPath(24)}" title="{$oPoster->getLogin()}" /></a>
-										<a href="{$oPoster->getUserWebPath()}">{$oPoster->getLogin()}</a>
-									{else}
-										<a href="{router page='forum'}topic/{$oTopic->getId()}/lastpost">{$aLang.plugin.forum.guest_prefix}{$oPost->getGuestName()}</a>
-									{/if}
-								</span>
+								{if $oPoster}
+									<a href="{$oPoster->getUserWebPath()}">{$oPoster->getLogin()}</a>
+								{else}
+									<a href="{router page='forum'}topic/{$oTopic->getId()}/lastpost">{$aLang.plugin.forum.guest_prefix}{$oPost->getGuestName()}</a>
+								{/if}
 							</li>
-							{if $oForum->getAllowRead() && $oForum->getAutorization()}
-							<li><a class="date" title="{$aLang.plugin.forum.post_last_view}" href="{router page='forum'}topic/{$oTopic->getId()}/lastpost">{date_format date=$oPost->getDateAdd()}</a></li>
-							{else}
-							<li><span title="{$aLang.plugin.forum.post_last_view}">{date_format date=$oPost->getDateAdd()}</span></li>
-							{/if}
+							<li>
+								{if $oForum->getAllowRead() && $oForum->getAutorization()}
+									<a class="date" title="{$aLang.plugin.forum.post_last_view}" href="{router page='forum'}topic/{$oTopic->getId()}/lastpost">{date_format date=$oPost->getDateAdd()}</a>
+								{else}
+									<span title="{$aLang.plugin.forum.post_last_view}">{date_format date=$oPost->getDateAdd()}</span>
+								{/if}
+							</li>
 						</ul>
 					{/if}
 				</td>
