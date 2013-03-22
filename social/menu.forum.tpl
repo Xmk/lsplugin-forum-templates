@@ -14,6 +14,6 @@
 	{hook run='menu_forum'}
 
 	{if $sMenuItemSelect=='admin'}
-		{include file="$sTemplatePathPlugin/menu.forum.admin.tpl"}
+		{include file="$sTemplatePathForum/menu.forum.admin.tpl"}
 	{/if}
 </div>
