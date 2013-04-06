@@ -45,6 +45,10 @@
 						<span class="divide">|</span>
 						<strong>{$oPost->getTitle()}</strong>
 					{/if}
+					{if $oPost->getParentId()}
+						{assign var="oParentPost" value=$oPost->getParent()}
+						{$aLang.plugin.forum.reply_for_post} <a href="{$oParentPost->getUrlFull()}">#{$oParentPost->getId()}</a>
+					{/if}
 					{hook run='forum_post_header_info_item' post=$oPost}
 				</div>
 				{hook run='forum_post_header_end' post=$oPost}
@@ -75,7 +79,10 @@
 	{if $oUserCurrent && !$noFooter}
 	<footer class="forum-post-footer clearfix">
 		<section class="fl-r">
-			<a href="{$oTopic->getUrlFull()}reply" class="button" onclick="return ls.forum.replyPost({$oPost->getId()})">
+			<a href="#" class="button js-forum-quote" data-name="{if $oUser}{$oUser->getLogin()}{/if}" data-post-id="{$oPost->getId()}">
+				<span class="icon-white icon-leaf"></span> {$aLang.plugin.forum.button_quote}
+			</a>
+			<a href="{$oTopic->getUrlFull()}reply" class="button js-forum-reply" data-name="{if $oUser}{$oUser->getLogin()}{/if}" data-post-id="{$oPost->getId()}">
 				<span class="icon-white icon-comment"></span> {$aLang.plugin.forum.button_reply}
 			</a>
 			{if $LS->ACL_IsAllowEditForumPost($oPost,$oUserCurrent)}
