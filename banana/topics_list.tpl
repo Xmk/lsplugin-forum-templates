@@ -13,7 +13,7 @@
 					<a href="{$oUser->getUserWebPath()}"><img src="{$oUser->getProfileAvatarPath(48)}" title="{$aLang.plugin.forum.header_author}: {$oUser->getLogin()}" /></a>
 				</div>
 				{if $oTopic->getPinned()==1}
-					{$aLang.plugin.forum.topic_pinned}:
+					<span class="badge">{$aLang.plugin.forum.topic_pinned}</span>
 				{/if}
 				<a href="{$oTopic->getUrlFull()}">{$oTopic->getTitle()}</a>
 				{include file="$sTemplatePathForum/paging_post.tpl" aPaging=$oTopic->getPaging()}
